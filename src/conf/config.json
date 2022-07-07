@@ -1,0 +1,8 @@
+{
+  "dbUserName" : "t1",
+  "dbPassword" : "t2",
+  "dbHostName" : "192.168.100.100",
+  "dbPortNumber" : 5432,
+  "dbName" : "testdb",
+  "maxPoolSize" : 4
+}

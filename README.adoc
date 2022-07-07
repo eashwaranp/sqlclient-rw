@@ -1,0 +1,33 @@
+= SQL Client read/write
+
+This client can write and read records into a Postgres database.
+It has various modes of operation.
+
+* Uses `vertx-sql-client` if `useSqlClient` environment variable is set to true.  Default for `useSqlClient` is false.
+* Uses JDBC with database connection pooling providers like Agroal or Hikari, specified by `cpProvider` environment variable, if `useSqlClient` is false.  The `cpProvider` defaults to `agroal`, and can be set to `hikari` to use Hikari CP.
+
+You can run it directly in your IDE by creating a run configuration that uses the main class `io.vertx.core.Launcher`, passes in the arguments `run io.vertx.example.web.sqlclient2.Server -conf src/conf/config.json`, and specify using the classpath of module `sqlclient-rw`.
+
+The pom.xml uses the Maven shade plugin to assemble the application and all it's dependencies into a single "fat" jar.
+
+To build a "fat jar"
+
+    mvn package
+
+Replace <project-version> with the right one specified in the maven `pom.xml`.
+
+To run the fat jar with SQL client:
+
+    java -jar target/sqlclient-rw-<project-version>-fat.jar -DuseSqlClient=true -conf src/conf/config.json
+    
+To run the fat jar with JDBC and Agroal CP:
+    
+    java -jar target/sqlclient-rw-<project-version>-fat.jar -conf src/conf/config.json
+
+To run the fat jar with JDBC and Hikari CP:
+
+    java -jar target/sqlclient-rw-<project-version>-fat.jar -DcpProvider=hikari -conf src/conf/config.json
+
+(You can take that jar and run it anywhere there is a Java 8+ JRE. It contains all the dependencies it needs so you
+don't need to install Vert.x on the target machine).
+
